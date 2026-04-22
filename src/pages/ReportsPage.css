@@ -1,0 +1,135 @@
+/* ====== REPORTS PAGE ====== */
+.reports-page {
+  max-width: 800px;
+}
+
+.reports-page h1 {
+  font-family: var(--font-heading);
+  font-size: 2.4rem;
+  color: var(--color-primary);
+  margin-bottom: 28px;
+  animation: fadeInUp 0.4s ease;
+}
+
+.progress-card {
+  padding: 32px;
+  margin-bottom: 24px;
+  animation: fadeInUp 0.5s ease;
+}
+.progress-card:nth-child(3) {
+  animation-delay: 0.1s;
+}
+.progress-card:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.progress-card h2 {
+  font-family: var(--font-heading);
+  font-size: 1.7rem;
+  margin-bottom: 20px;
+}
+
+/* ====== PROGRESS BAR ====== */
+.progress-bar-container {
+  background: #f0ece3;
+  border: 2px solid #2D2D2D;
+  border-radius: 20px;
+  height: 28px;
+  overflow: hidden;
+  position: relative;
+}
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-primary-light));
+  transition: width 1s ease;
+  animation: fillProgress 1s ease;
+  position: relative;
+}
+.progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 6px,
+    rgba(255,255,255,0.15) 6px,
+    rgba(255,255,255,0.15) 12px
+  );
+}
+.progress-text {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 1.1rem;
+  color: var(--color-muted);
+}
+
+/* ====== SUBJECT BREAKDOWN ====== */
+.subject-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.subject-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.subject-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.05rem;
+}
+.subject-header .subject-name {
+  font-weight: 600;
+}
+.subject-header .subject-pct {
+  color: var(--color-muted);
+}
+.subject-bar {
+  background: #f0ece3;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  height: 14px;
+  overflow: hidden;
+}
+.subject-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 1s ease;
+  animation: fillProgress 1s ease;
+}
+
+/* ====== STUDY STATS ====== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.stat-box {
+  text-align: center;
+  padding: 20px;
+  border: 2px dashed #ccc;
+  border-radius: var(--radius-sketch);
+}
+.stat-number {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  display: block;
+}
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+@media (max-width: 600px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

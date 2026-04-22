@@ -1,0 +1,261 @@
+/* ====== DASHBOARD ====== */
+.dashboard-page {
+  max-width: 1000px;
+}
+
+/* ====== WELCOME BANNER ====== */
+.welcome-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 32px;
+  margin-bottom: 28px;
+  animation: fadeInUp 0.4s ease;
+}
+.welcome-banner h1 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 600;
+}
+.welcome-banner .sketch-btn {
+  white-space: nowrap;
+  font-size: 1rem;
+  padding: 8px 20px;
+}
+
+/* ====== CARDS GRID ====== */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.dash-card {
+  padding: 28px;
+  min-height: 220px;
+  animation: fadeInUp 0.5s ease;
+}
+.dash-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.dash-card h2 {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-underline-offset: 4px;
+  margin-bottom: 12px;
+}
+
+.dash-card .empty-text {
+  color: var(--color-muted);
+  font-size: 1rem;
+}
+
+/* ====== EXAM LIST ====== */
+.exam-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.exam-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+.exam-item:hover {
+  border-color: var(--color-primary);
+  background: rgba(108, 124, 232, 0.04);
+}
+.exam-item .exam-name {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+.exam-item .exam-date {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+.exam-item .delete-exam-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  opacity: 0.4;
+  transition: opacity 0.2s;
+  padding: 4px;
+}
+.exam-item .delete-exam-btn:hover {
+  opacity: 1;
+}
+
+/* ====== STUDY PLAN ====== */
+.topic-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.topic-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 1.05rem;
+}
+.topic-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+.topic-item.completed span {
+  text-decoration: line-through;
+  color: var(--color-muted);
+}
+
+/* ====== STUDY STREAK ====== */
+.streak-section {
+  margin-bottom: 28px;
+  animation: fadeInUp 0.5s ease 0.2s;
+  animation-fill-mode: backwards;
+}
+.streak-card {
+  padding: 24px 28px;
+}
+.streak-card h2 {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  margin-bottom: 16px;
+  color: var(--color-primary);
+}
+.streak-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.streak-fire {
+  font-size: 2.4rem;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+.streak-count {
+  font-size: 1.8rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+.streak-count small {
+  font-size: 1rem;
+  color: var(--color-muted);
+  font-weight: 400;
+}
+.streak-grid {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+.streak-day {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  background: #e8e4da;
+  transition: background 0.2s;
+}
+.streak-day.active {
+  background: var(--color-success);
+}
+.streak-day.today {
+  border: 2px solid var(--color-primary);
+}
+.streak-message {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+/* ====== NEW EXAM MODAL ====== */
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.modal-form label {
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+.modal-form .topics-input-area {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.topic-tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.topic-tag {
+  background: var(--color-accent);
+  border: 2px solid #2D2D2D;
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.topic-tag button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0;
+  opacity: 0.6;
+}
+.topic-tag button:hover {
+  opacity: 1;
+}
+.topic-input-row {
+  display: flex;
+  gap: 8px;
+}
+.topic-input-row .sketch-input {
+  flex: 1;
+}
+.topic-input-row .sketch-btn {
+  padding: 10px 18px;
+}
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+.modal-buttons .sketch-btn {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  .welcome-banner {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 20px 24px;
+  }
+  .welcome-banner h1 {
+    font-size: 1.6rem;
+  }
+  .streak-grid {
+    justify-content: center;
+  }
+}

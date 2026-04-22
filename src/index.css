@@ -1,0 +1,309 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Patrick+Hand&display=swap');
+
+:root {
+  /* Colors */
+  --bg-page: #FDF6E3;
+  --bg-dots: #e0d5c1;
+  --bg-card: #FFFFFF;
+  --border-sketch: 3px solid #2D2D2D;
+  --shadow-sketch: 4px 4px 0px #2D2D2D;
+  --shadow-sketch-hover: 6px 6px 0px #2D2D2D;
+  --color-primary: #6C7CE8;
+  --color-primary-light: #a0aaff;
+  --color-accent: #FFD54F;
+  --color-accent-hover: #FFC107;
+  --color-danger: #E57373;
+  --color-danger-hover: #d32f2f;
+  --color-success: #81C784;
+  --color-text: #2D2D2D;
+  --color-muted: #888;
+  --color-sidebar-bg: #FEFCF5;
+  --color-active-bg: #6C7CE8;
+  --color-active-text: #FFFFFF;
+
+  /* Typography */
+  --font-heading: 'Caveat', cursive;
+  --font-body: 'Patrick Hand', cursive;
+
+  /* Spacing */
+  --radius-sketch: 12px;
+  --sidebar-width: 200px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background-color: var(--bg-page);
+  background-image: radial-gradient(circle, var(--bg-dots) 1px, transparent 1px);
+  background-size: 24px 24px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ====== SCROLLBAR ====== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-muted);
+  border-radius: 10px;
+}
+
+/* ====== SKETCH CARD ====== */
+.sketch-card {
+  background: var(--bg-card);
+  border: var(--border-sketch);
+  border-radius: var(--radius-sketch);
+  box-shadow: var(--shadow-sketch);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.sketch-card:hover {
+  box-shadow: var(--shadow-sketch-hover);
+  transform: translate(-1px, -1px);
+}
+
+/* ====== SKETCH BUTTON ====== */
+.sketch-btn {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  padding: 10px 28px;
+  border: var(--border-sketch);
+  border-radius: var(--radius-sketch);
+  box-shadow: var(--shadow-sketch);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: var(--bg-card);
+  color: var(--color-text);
+  position: relative;
+  overflow: hidden;
+}
+.sketch-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-sketch-hover);
+}
+.sketch-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px #2D2D2D;
+}
+.sketch-btn.primary {
+  background: var(--color-accent);
+}
+.sketch-btn.primary:hover {
+  background: var(--color-accent-hover);
+}
+.sketch-btn.danger {
+  background: var(--color-danger);
+  color: white;
+}
+
+/* ====== SKETCH INPUT ====== */
+.sketch-input {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  padding: 12px 18px;
+  border: var(--border-sketch);
+  border-radius: var(--radius-sketch);
+  box-shadow: var(--shadow-sketch);
+  background: var(--bg-card);
+  color: var(--color-text);
+  width: 100%;
+  outline: none;
+  transition: box-shadow 0.2s ease;
+}
+.sketch-input:focus {
+  box-shadow: var(--shadow-sketch-hover);
+}
+.sketch-input::placeholder {
+  color: var(--color-muted);
+}
+
+/* ====== ANIMATIONS ====== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes drawIn {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes wobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-2deg); }
+  75% { transform: rotate(2deg); }
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); }
+  70% { transform: scale(0.95); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pencilDraw {
+  0% { stroke-dashoffset: 1000; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fillProgress {
+  from { width: 0%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.animate-bounce-in {
+  animation: bounceIn 0.6s ease forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.4s ease forwards;
+}
+
+/* Staggered children animation */
+.stagger-children > * {
+  opacity: 0;
+  animation: fadeInUp 0.4s ease forwards;
+}
+.stagger-children > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.4s; }
+
+/* ====== MODAL OVERLAY ====== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-content {
+  background: var(--bg-card);
+  border: var(--border-sketch);
+  border-radius: var(--radius-sketch);
+  box-shadow: 6px 6px 0px #2D2D2D;
+  padding: 32px;
+  width: 90%;
+  max-width: 480px;
+  animation: bounceIn 0.4s ease;
+}
+
+.modal-content h2 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: var(--color-primary);
+}
+
+/* ====== SELECT ====== */
+.sketch-select {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  padding: 12px 18px;
+  border: var(--border-sketch);
+  border-radius: var(--radius-sketch);
+  box-shadow: var(--shadow-sketch);
+  background: var(--bg-card);
+  color: var(--color-text);
+  width: 100%;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232D2D2D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+  padding-right: 40px;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 768px) {
+  :root {
+    --sidebar-width: 0px;
+  }
+}

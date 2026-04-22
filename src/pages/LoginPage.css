@@ -1,0 +1,112 @@
+/* ====== LOGIN PAGE ====== */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 440px;
+  padding: 48px 40px;
+  text-align: center;
+  animation: bounceIn 0.6s ease;
+}
+
+.login-logo {
+  font-family: var(--font-heading);
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 36px;
+  animation: wobble 0.6s ease 0.6s;
+  display: inline-block;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.login-form .sketch-input {
+  text-align: left;
+}
+
+.login-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.login-buttons .sketch-btn {
+  flex: 1;
+}
+
+.login-error {
+  color: var(--color-danger);
+  font-size: 0.95rem;
+  margin-top: 4px;
+  animation: shake 0.4s ease;
+}
+
+.login-toggle {
+  margin-top: 16px;
+  font-size: 1rem;
+  color: var(--color-muted);
+}
+
+.login-toggle span {
+  color: var(--color-primary);
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 600;
+}
+.login-toggle span:hover {
+  color: var(--color-primary-light);
+}
+
+/* Username field animation */
+.username-field {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+.username-field.show {
+  max-height: 80px;
+  opacity: 1;
+}
+
+/* ====== DECORATIVE ELEMENTS ====== */
+.login-doodle {
+  position: absolute;
+  opacity: 0.08;
+  pointer-events: none;
+}
+.login-doodle.top-left {
+  top: 40px;
+  left: 40px;
+  font-size: 80px;
+  animation: float 3s ease-in-out infinite;
+}
+.login-doodle.bottom-right {
+  bottom: 40px;
+  right: 40px;
+  font-size: 60px;
+  animation: float 3s ease-in-out infinite 1.5s;
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 32px 24px;
+  }
+  .login-logo {
+    font-size: 2.4rem;
+  }
+  .login-buttons {
+    flex-direction: column;
+  }
+}

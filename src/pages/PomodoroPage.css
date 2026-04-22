@@ -1,0 +1,195 @@
+/* ====== POMODORO PAGE ====== */
+.pomodoro-page {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.pomodoro-card {
+  padding: 40px 32px;
+  text-align: center;
+  animation: bounceIn 0.5s ease;
+}
+
+.pomodoro-card h1 {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  color: var(--color-primary);
+  margin-bottom: 20px;
+}
+
+/* ====== MODE TOGGLE ====== */
+.mode-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 28px;
+  background: #f0ece3;
+  border-radius: 8px;
+  padding: 4px;
+  display: inline-flex;
+}
+.mode-toggle button {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 8px 20px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--color-muted);
+}
+.mode-toggle button.active {
+  background: var(--bg-card);
+  color: var(--color-text);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  font-weight: 600;
+}
+
+/* ====== TIMER CIRCLE ====== */
+.timer-circle-container {
+  position: relative;
+  width: 240px;
+  height: 240px;
+  margin: 0 auto 28px;
+}
+.timer-circle-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.timer-circle-bg {
+  fill: none;
+  stroke: #e8e4da;
+  stroke-width: 6;
+}
+.timer-circle-fg {
+  fill: none;
+  stroke: var(--color-text);
+  stroke-width: 6;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear;
+}
+.timer-circle-fill {
+  fill: #F9F3E3;
+}
+.timer-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: 2px;
+}
+
+/* ====== CONTROLS ====== */
+.timer-controls {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.timer-controls .sketch-btn {
+  min-width: 100px;
+}
+
+/* ====== PRESET BUTTONS ====== */
+.preset-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+.preset-btn {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  padding: 6px 16px;
+  border: 2px solid #ccc;
+  border-radius: 20px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--color-muted);
+}
+.preset-btn.active, .preset-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: rgba(108, 124, 232, 0.08);
+}
+
+/* ====== AMBIENT AUDIO ====== */
+.audio-section {
+  border-top: 2px dashed #e0e0e0;
+  padding-top: 24px;
+  margin-top: 8px;
+}
+.audio-section h3 {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+  color: var(--color-text);
+}
+.audio-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+}
+.audio-controls .sketch-select {
+  max-width: 260px;
+}
+.volume-slider {
+  width: 100px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+}
+
+/* ====== COMPLETION ANIMATION ====== */
+.timer-complete {
+  animation: pulse 0.5s ease infinite;
+}
+.timer-complete .timer-display {
+  color: var(--color-success);
+}
+
+/* ====== STOPWATCH MODE ====== */
+.stopwatch-laps {
+  margin-top: 20px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+.lap-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.lap-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 12px;
+  border-bottom: 1px dashed #e0e0e0;
+  font-size: 0.95rem;
+}
+.lap-number {
+  color: var(--color-muted);
+}
+
+@media (max-width: 480px) {
+  .pomodoro-card {
+    padding: 28px 20px;
+  }
+  .timer-circle-container {
+    width: 200px;
+    height: 200px;
+  }
+  .timer-display {
+    font-size: 2.8rem;
+  }
+  .audio-controls {
+    flex-direction: column;
+  }
+}
