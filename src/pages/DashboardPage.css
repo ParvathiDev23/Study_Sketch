@@ -120,6 +120,30 @@
   color: var(--color-muted);
 }
 
+/* ====== TOPIC RESOURCE LINKS (AI) ====== */
+.topic-resource-links {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+.topic-resource-links a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid #ddd;
+  transition: all 0.2s;
+  font-size: 0.75rem;
+}
+.topic-resource-links a:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  transform: scale(1.15);
+}
+
 /* ====== STUDY STREAK ====== */
 .streak-section {
   margin-bottom: 28px;
@@ -242,6 +266,48 @@
   flex: 1;
 }
 
+/* ====== MODAL TABS ====== */
+.modal-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  background: #f0ede4;
+  border-radius: 10px;
+  padding: 4px;
+}
+.modal-tab {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: none;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--color-muted);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.modal-tab:hover {
+  background: rgba(255,255,255,0.5);
+}
+.modal-tab.active {
+  background: white;
+  color: var(--color-text);
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+/* ====== LARGER MODAL ====== */
+.modal-content-lg {
+  max-width: 600px;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
 @media (max-width: 768px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
@@ -257,5 +323,13 @@
   }
   .streak-grid {
     justify-content: center;
+  }
+  .modal-content-lg {
+    max-width: 95%;
+    max-height: 90vh;
+    padding: 20px;
+  }
+  .modal-tabs {
+    flex-direction: column;
   }
 }

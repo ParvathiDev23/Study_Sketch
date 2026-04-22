@@ -5,6 +5,7 @@ import {
   collection, addDoc, getDocs, deleteDoc, doc, updateDoc,
   query, where, orderBy, onSnapshot
 } from 'firebase/firestore';
+import AIExamCreator from '../components/Dashboard/AIExamCreator';
 import './DashboardPage.css';
 
 export default function DashboardPage() {
@@ -12,6 +13,7 @@ export default function DashboardPage() {
   const [exams, setExams] = useState([]);
   const [topics, setTopics] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [modalTab, setModalTab] = useState('manual'); // 'manual' | 'ai'
   const [newExam, setNewExam] = useState({ name: '', date: '', topics: [] });
   const [topicInput, setTopicInput] = useState('');
   const [streakDays, setStreakDays] = useState([]);
@@ -56,7 +58,6 @@ export default function DashboardPage() {
     const unsub = onSnapshot(q, (snap) => {
       const days = snap.docs.map(d => d.data().date);
       setStreakDays(days);
-      // Calculate streak
       let count = 0;
       const today = new Date();
       for (let i = 0; i < 365; i++) {
@@ -72,6 +73,7 @@ export default function DashboardPage() {
     return unsub;
   }, [currentUser]);
 
+  // Manual exam creation
   async function handleCreateExam() {
     if (!newExam.name || !newExam.date) return;
     const examRef = await addDoc(collection(db, 'exams'), {
@@ -80,7 +82,6 @@ export default function DashboardPage() {
       examDate: newExam.date,
       createdAt: new Date().toISOString()
     });
-    // Add topics
     for (const t of newExam.topics) {
       await addDoc(collection(db, 'topics'), {
         userId: currentUser.uid,
@@ -94,9 +95,34 @@ export default function DashboardPage() {
     setShowModal(false);
   }
 
+  // AI-powered exam creation
+  async function handleAICreateExam(examData) {
+    const examRef = await addDoc(collection(db, 'exams'), {
+      userId: currentUser.uid,
+      name: examData.name,
+      examDate: examData.date,
+      aiGenerated: true,
+      totalEstimatedHours: examData.totalEstimatedHours || null,
+      summary: examData.summary || '',
+      createdAt: new Date().toISOString()
+    });
+    for (const t of examData.topics) {
+      await addDoc(collection(db, 'topics'), {
+        userId: currentUser.uid,
+        examId: examRef.id,
+        name: t.name,
+        isCompleted: false,
+        estimatedMinutes: t.estimatedMinutes || null,
+        youtubeQuery: t.youtubeQuery || '',
+        articleQuery: t.articleQuery || ''
+      });
+    }
+    setShowModal(false);
+    setModalTab('manual');
+  }
+
   async function handleDeleteExam(examId) {
     await deleteDoc(doc(db, 'exams', examId));
-    // Delete associated topics
     const q = query(collection(db, 'topics'), where('examId', '==', examId));
     const snap = await getDocs(q);
     snap.forEach(async (d) => await deleteDoc(doc(db, 'topics', d.id)));
@@ -114,6 +140,13 @@ export default function DashboardPage() {
 
   function removeTopic(idx) {
     setNewExam(prev => ({ ...prev, topics: prev.topics.filter((_, i) => i !== idx) }));
+  }
+
+  function closeModal() {
+    setShowModal(false);
+    setModalTab('manual');
+    setNewExam({ name: '', date: '', topics: [] });
+    setTopicInput('');
   }
 
   // Generate last 28 days for streak grid
@@ -188,6 +221,12 @@ export default function DashboardPage() {
                     onChange={() => toggleTopic(t.id, t.isCompleted)}
                   />
                   <span>{t.name}</span>
+                  {t.youtubeQuery && (
+                    <div className="topic-resource-links">
+                      <a href={`https://www.youtube.com/results?search_query=${encodeURIComponent(t.youtubeQuery)}`} target="_blank" rel="noopener noreferrer" title="YouTube">▶</a>
+                      <a href={`https://www.google.com/search?q=${encodeURIComponent(t.articleQuery + ' tutorial guide')}`} target="_blank" rel="noopener noreferrer" title="Articles">📖</a>
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>
@@ -203,9 +242,19 @@ export default function DashboardPage() {
               {exams.map(exam => (
                 <li key={exam.id} className="exam-item">
                   <div>
-                    <span className="exam-name">{exam.name}</span>
+                    <span className="exam-name">
+                      {exam.aiGenerated && <span title="AI Generated" style={{ marginRight: '4px' }}>🤖</span>}
+                      {exam.name}
+                    </span>
                     <br />
-                    <span className="exam-date">{new Date(exam.examDate).toLocaleDateString()}</span>
+                    <span className="exam-date">
+                      {new Date(exam.examDate).toLocaleDateString()}
+                      {exam.totalEstimatedHours && (
+                        <span style={{ marginLeft: '8px', color: 'var(--color-success)' }}>
+                          ~{exam.totalEstimatedHours}h
+                        </span>
+                      )}
+                    </span>
                   </div>
                   <button
                     className="delete-exam-btn"
@@ -221,60 +270,88 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      {/* New Exam Modal */}
+      {/* New Exam Modal — Tabbed */}
       {showModal && (
-        <div className="modal-overlay" onClick={() => setShowModal(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content modal-content-lg" onClick={e => e.stopPropagation()}>
             <h2>📝 New Exam</h2>
-            <div className="modal-form">
-              <div>
-                <label>Exam Name</label>
-                <input
-                  className="sketch-input"
-                  placeholder="e.g. Math Final"
-                  value={newExam.name}
-                  onChange={e => setNewExam(prev => ({ ...prev, name: e.target.value }))}
-                  id="exam-name-input"
-                />
-              </div>
-              <div>
-                <label>Exam Date</label>
-                <input
-                  type="date"
-                  className="sketch-input"
-                  value={newExam.date}
-                  onChange={e => setNewExam(prev => ({ ...prev, date: e.target.value }))}
-                  id="exam-date-input"
-                />
-              </div>
-              <div className="topics-input-area">
-                <label>Topics</label>
-                <div className="topic-tag-list">
-                  {newExam.topics.map((t, i) => (
-                    <span key={i} className="topic-tag">
-                      {t} <button onClick={() => removeTopic(i)}>×</button>
-                    </span>
-                  ))}
-                </div>
-                <div className="topic-input-row">
+
+            {/* Tab Toggle */}
+            <div className="modal-tabs">
+              <button
+                className={`modal-tab ${modalTab === 'manual' ? 'active' : ''}`}
+                onClick={() => setModalTab('manual')}
+              >
+                ✏️ Manual
+              </button>
+              <button
+                className={`modal-tab ${modalTab === 'ai' ? 'active' : ''}`}
+                onClick={() => setModalTab('ai')}
+              >
+                🤖 AI-Powered ✨
+              </button>
+            </div>
+
+            {/* Manual Tab */}
+            {modalTab === 'manual' && (
+              <div className="modal-form">
+                <div>
+                  <label>Exam Name</label>
                   <input
                     className="sketch-input"
-                    placeholder="Add a topic..."
-                    value={topicInput}
-                    onChange={e => setTopicInput(e.target.value)}
-                    onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addTopic())}
-                    id="topic-input"
+                    placeholder="e.g. Math Final"
+                    value={newExam.name}
+                    onChange={e => setNewExam(prev => ({ ...prev, name: e.target.value }))}
+                    id="exam-name-input"
                   />
-                  <button className="sketch-btn" onClick={addTopic} type="button">+</button>
+                </div>
+                <div>
+                  <label>Exam Date</label>
+                  <input
+                    type="date"
+                    className="sketch-input"
+                    value={newExam.date}
+                    onChange={e => setNewExam(prev => ({ ...prev, date: e.target.value }))}
+                    id="exam-date-input"
+                  />
+                </div>
+                <div className="topics-input-area">
+                  <label>Topics</label>
+                  <div className="topic-tag-list">
+                    {newExam.topics.map((t, i) => (
+                      <span key={i} className="topic-tag">
+                        {t} <button onClick={() => removeTopic(i)}>×</button>
+                      </span>
+                    ))}
+                  </div>
+                  <div className="topic-input-row">
+                    <input
+                      className="sketch-input"
+                      placeholder="Add a topic..."
+                      value={topicInput}
+                      onChange={e => setTopicInput(e.target.value)}
+                      onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addTopic())}
+                      id="topic-input"
+                    />
+                    <button className="sketch-btn" onClick={addTopic} type="button">+</button>
+                  </div>
+                </div>
+                <div className="modal-buttons">
+                  <button className="sketch-btn" onClick={closeModal}>Cancel</button>
+                  <button className="sketch-btn primary" onClick={handleCreateExam} id="create-exam-btn">
+                    Create
+                  </button>
                 </div>
               </div>
-              <div className="modal-buttons">
-                <button className="sketch-btn" onClick={() => setShowModal(false)}>Cancel</button>
-                <button className="sketch-btn primary" onClick={handleCreateExam} id="create-exam-btn">
-                  Create
-                </button>
-              </div>
-            </div>
+            )}
+
+            {/* AI Tab */}
+            {modalTab === 'ai' && (
+              <AIExamCreator
+                onCreateExam={handleAICreateExam}
+                onCancel={closeModal}
+              />
+            )}
           </div>
         </div>
       )}
