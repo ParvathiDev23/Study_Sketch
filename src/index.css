@@ -302,8 +302,4 @@ body {
 }
 
 /* ====== RESPONSIVE ====== */
-@media (max-width: 768px) {
-  :root {
-    --sidebar-width: 0px;
-  }
-}
+/* Sidebar responsive handled in Sidebar.css */
