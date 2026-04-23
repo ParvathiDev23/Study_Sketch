@@ -49,7 +49,21 @@ export default function LoginPage() {
       <div className="login-doodle bottom-right">📖</div>
 
       <div className="login-card sketch-card">
+        {/* Animated Mascot */}
+        <div className="login-mascot">
+          <div className="mascot-body">
+            <div className="mascot-pencil">✏️</div>
+            <div className="mascot-eyes">
+              <span className="mascot-eye">•</span>
+              <span className="mascot-eye">•</span>
+            </div>
+            <div className="mascot-mouth">‿</div>
+            <div className="mascot-hand">👋</div>
+          </div>
+        </div>
+
         <h1 className="login-logo">StudySketch</h1>
+        <p className="login-tagline">Study Smarter, Sketch Your Success ✨</p>
 
         <form className="login-form" onSubmit={handleSubmit}>
           <div className={`username-field ${isSignUp ? 'show' : ''}`}>
@@ -118,6 +132,16 @@ export default function LoginPage() {
             <>Don't have an account? <span onClick={() => { setIsSignUp(true); setError(''); }}>Sign Up</span></>
           )}
         </p>
+
+        {/* Feature highlights */}
+        <div className="login-features">
+          <span className="feature-pill">⏱️ Pomodoro</span>
+          <span className="feature-pill">📋 To-Do</span>
+          <span className="feature-pill">🃏 Flashcards</span>
+          <span className="feature-pill">📊 Reports</span>
+          <span className="feature-pill">🌙 Dark Mode</span>
+          <span className="feature-pill">🤖 AI Study Plan</span>
+        </div>
       </div>
     </div>
   );

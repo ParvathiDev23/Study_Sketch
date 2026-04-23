@@ -15,14 +15,69 @@
   animation: bounceIn 0.6s ease;
 }
 
+/* ====== ANIMATED MASCOT ====== */
+.login-mascot {
+  margin-bottom: 12px;
+  animation: bounceIn 0.8s ease 0.2s backwards;
+}
+.mascot-body {
+  display: inline-block;
+  position: relative;
+  font-size: 1rem;
+}
+.mascot-pencil {
+  font-size: 4rem;
+  animation: float 3s ease-in-out infinite;
+}
+.mascot-eyes {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: -8px;
+  font-size: 1.4rem;
+  color: var(--color-text);
+  animation: blink 3s ease infinite;
+}
+.mascot-mouth {
+  font-size: 1.6rem;
+  color: var(--color-primary);
+  margin-top: -4px;
+}
+.mascot-hand {
+  position: absolute;
+  right: -30px;
+  top: 10px;
+  font-size: 1.5rem;
+  animation: wave 2s ease-in-out infinite;
+  transform-origin: 70% 70%;
+}
+
+@keyframes blink {
+  0%, 90%, 100% { opacity: 1; }
+  95% { opacity: 0; }
+}
+@keyframes wave {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  10% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  30% { transform: rotate(14deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+}
+
 .login-logo {
   font-family: var(--font-heading);
   font-size: 3.2rem;
   font-weight: 700;
   color: var(--color-primary);
-  margin-bottom: 36px;
+  margin-bottom: 4px;
   animation: wobble 0.6s ease 0.6s;
   display: inline-block;
+}
+.login-tagline {
+  color: var(--color-muted);
+  font-size: 1rem;
+  margin-bottom: 28px;
 }
 
 .login-form {
@@ -80,6 +135,31 @@
   opacity: 1;
 }
 
+/* ====== FEATURE PILLS ====== */
+.login-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--color-border-light);
+}
+.feature-pill {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  background: rgba(108, 124, 232, 0.08);
+  color: var(--color-muted);
+  border: 1px solid rgba(108, 124, 232, 0.15);
+  transition: all 0.2s ease;
+}
+.feature-pill:hover {
+  background: rgba(108, 124, 232, 0.15);
+  color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
 /* ====== DECORATIVE ELEMENTS ====== */
 .login-doodle {
   position: absolute;
@@ -109,4 +189,8 @@
   .login-buttons {
     flex-direction: column;
   }
+  .mascot-pencil {
+    font-size: 3rem;
+  }
 }
+
