@@ -27,7 +27,7 @@
 }
 .mascot-pencil {
   font-size: 4rem;
-  animation: float 3s ease-in-out infinite;
+  animation: figureEightFloat 4s ease-in-out infinite;
 }
 .mascot-eyes {
   display: flex;
@@ -55,6 +55,12 @@
 @keyframes blink {
   0%, 90%, 100% { opacity: 1; }
   95% { opacity: 0; }
+}
+@keyframes figureEightFloat {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  25% { transform: translate(4px, -6px) rotate(4deg); }
+  50% { transform: translate(0, -12px) rotate(0deg); }
+  75% { transform: translate(-4px, -6px) rotate(-4deg); }
 }
 @keyframes wave {
   0%, 60%, 100% { transform: rotate(0deg); }

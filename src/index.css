@@ -91,11 +91,20 @@ body {
   border: var(--border-sketch);
   border-radius: var(--radius-sketch);
   box-shadow: var(--shadow-sketch);
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  transition: box-shadow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .sketch-card:hover {
   box-shadow: var(--shadow-sketch-hover);
-  transform: translate(-1px, -1px);
+  transform: translate(-2px, -2px) rotate(0.5deg);
+}
+
+/* ====== STICKER CARD (Wobbly Border) ====== */
+.sticker-card {
+  border-radius: 1% 99% 2% 98% / 98% 2% 99% 1% !important;
+}
+.sticker-card:hover {
+  border-radius: 98% 2% 98% 2% / 2% 98% 3% 97% !important;
+  transform: translate(-2px, -4px) rotate(-1.5deg);
 }
 
 /* ====== SKETCH BUTTON ====== */
@@ -112,9 +121,10 @@ body {
   color: var(--color-text);
   position: relative;
   overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .sketch-btn:hover {
-  transform: translate(-2px, -2px);
+  transform: translate(-3px, -3px) rotate(-2deg);
   box-shadow: var(--shadow-sketch-hover);
 }
 .sketch-btn:active {

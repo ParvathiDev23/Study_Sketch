@@ -23,8 +23,9 @@
   margin-bottom: 32px;
   padding-left: 8px;
   cursor: default;
-  animation: wobble 0.6s ease;
+  animation: float 4s ease-in-out infinite;
   white-space: nowrap;
+  display: inline-block;
 }
 
 .sidebar-nav {
@@ -56,7 +57,7 @@
 
 .sidebar-link:hover {
   background: rgba(108, 124, 232, 0.08);
-  transform: translateX(4px);
+  transform: translateX(4px) rotate(-1.5deg);
 }
 
 .sidebar-link.active {

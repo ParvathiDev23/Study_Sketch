@@ -210,7 +210,7 @@ export default function DashboardPage() {
   return (
     <div className="dashboard-page">
       {/* Welcome Banner */}
-      <div className="welcome-banner sketch-card">
+      <div className="welcome-banner sketch-card sticker-card">
         <h1>Welcome, {displayName}!</h1>
         <button
           className="sketch-btn primary"
@@ -222,7 +222,7 @@ export default function DashboardPage() {
       </div>
 
       {/* Quote of the Day */}
-      <div className="quote-card sketch-card">
+      <div className="quote-card sketch-card sticker-card">
         <span className="quote-icon">💡</span>
         <blockquote className="quote-text">"{dailyQuote.text}"</blockquote>
         <cite className="quote-author">— {dailyQuote.author}</cite>
@@ -230,7 +230,7 @@ export default function DashboardPage() {
 
       {/* Study Streak */}
       <div className="streak-section">
-        <div className="streak-card sketch-card">
+        <div className="streak-card sketch-card sticker-card">
           <h2>🔥 Study Streak</h2>
           <div className="streak-info">
             <span className="streak-fire">🔥</span>

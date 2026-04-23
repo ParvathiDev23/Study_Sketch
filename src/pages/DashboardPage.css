@@ -33,6 +33,7 @@
   animation: fadeInUp 0.5s ease 0.1s;
   animation-fill-mode: backwards;
   background: linear-gradient(135deg, var(--bg-card), rgba(108, 124, 232, 0.06));
+  transform: rotate(1.5deg);
 }
 .quote-icon {
   font-size: 1.8rem;
