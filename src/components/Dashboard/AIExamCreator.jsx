@@ -7,7 +7,8 @@ const GEMINI_KEY_STORAGE = 'studysketch_gemini_key';
 
 export default function AIExamCreator({ onCreateExam, onCancel }) {
   const [apiKey, setApiKey] = useState(() => localStorage.getItem(GEMINI_KEY_STORAGE) || '');
-  const [apiKeyInput, setApiKeyInput] = useState(apiKey);
+  const [apiKeyInput, setApiKeyInput] = useState('');
+  const [showKeyInput, setShowKeyInput] = useState(false);
   const [files, setFiles] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -20,8 +21,19 @@ export default function AIExamCreator({ onCreateExam, onCancel }) {
   const fileInputRef = useRef(null);
 
   function saveApiKey() {
-    localStorage.setItem(GEMINI_KEY_STORAGE, apiKeyInput);
-    setApiKey(apiKeyInput);
+    const trimmed = apiKeyInput.trim();
+    if (!trimmed) return;
+    localStorage.setItem(GEMINI_KEY_STORAGE, trimmed);
+    setApiKey(trimmed);
+    setApiKeyInput('');
+    setShowKeyInput(false);
+  }
+
+  function clearApiKey() {
+    localStorage.removeItem(GEMINI_KEY_STORAGE);
+    setApiKey('');
+    setApiKeyInput('');
+    setShowKeyInput(false);
   }
 
   function handleFiles(newFiles) {
@@ -124,23 +136,55 @@ export default function AIExamCreator({ onCreateExam, onCancel }) {
   // ====== RENDER: API Key Setup ======
   const renderApiKeySection = () => (
     <div className="api-key-section">
-      <p>
-        🔑 Enter your free <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer">Gemini API key</a> to enable AI analysis
-      </p>
-      <div className="api-key-row">
-        <input
-          className="sketch-input"
-          type="password"
-          placeholder="Paste API key here..."
-          value={apiKeyInput}
-          onChange={e => setApiKeyInput(e.target.value)}
-        />
-        <button className="sketch-btn primary" onClick={saveApiKey} style={{ padding: '8px 16px', fontSize: '0.9rem' }}>
-          Save
-        </button>
-      </div>
-      {apiKey && (
-        <div className="api-key-saved">✅ API key saved</div>
+      {apiKey && !showKeyInput ? (
+        <>
+          <div className="api-key-saved">
+            ✅ API key saved ({apiKey.substring(0, 8)}...)
+            <button
+              className="sketch-btn"
+              onClick={() => setShowKeyInput(true)}
+              style={{ padding: '4px 12px', fontSize: '0.8rem', marginLeft: '8px', boxShadow: '2px 2px 0px #2D2D2D' }}
+            >
+              Change Key
+            </button>
+          </div>
+        </>
+      ) : (
+        <>
+          <p>
+            🔑 Enter your free <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer">Gemini API key</a> to enable AI analysis
+          </p>
+          <p style={{ fontSize: '0.8rem', color: 'var(--color-muted)', marginBottom: '8px' }}>
+            Go to the link above → Sign in → Create API key → Copy & paste below
+          </p>
+          <div className="api-key-row">
+            <input
+              className="sketch-input"
+              type="text"
+              placeholder="Paste your API key here..."
+              value={apiKeyInput}
+              onChange={e => setApiKeyInput(e.target.value)}
+              onKeyDown={e => e.key === 'Enter' && saveApiKey()}
+              autoComplete="off"
+            />
+            <button
+              className="sketch-btn primary"
+              onClick={saveApiKey}
+              disabled={!apiKeyInput.trim()}
+              style={{ padding: '8px 16px', fontSize: '0.9rem' }}
+            >
+              Save
+            </button>
+          </div>
+          {apiKey && showKeyInput && (
+            <button
+              onClick={() => setShowKeyInput(false)}
+              style={{ background: 'none', border: 'none', color: 'var(--color-muted)', cursor: 'pointer', marginTop: '4px', fontSize: '0.85rem' }}
+            >
+              Cancel
+            </button>
+          )}
+        </>
       )}
     </div>
   );

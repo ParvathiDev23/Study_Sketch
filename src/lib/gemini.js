@@ -32,24 +32,41 @@ Rules:
 NOTES CONTENT:
 ${textContent.substring(0, 30000)}`;
 
-  const response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: {
-        temperature: 0.3,
-        maxOutputTokens: 4096,
-      }
-    })
-  });
+  let response;
+  try {
+    response = await fetch(`${GEMINI_API_URL}?key=${apiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: {
+          temperature: 0.3,
+          maxOutputTokens: 4096,
+          responseMimeType: 'application/json',
+        }
+      })
+    });
+  } catch (networkErr) {
+    throw new Error('Network error. Please check your internet connection and try again.');
+  }
 
   if (!response.ok) {
-    const err = await response.json();
-    if (response.status === 400 || response.status === 403) {
-      throw new Error('Invalid API key or quota exceeded. Check your Gemini API key.');
+    let errMsg = 'AI analysis failed';
+    try {
+      const err = await response.json();
+      errMsg = err.error?.message || errMsg;
+    } catch (e) { /* ignore parse error */ }
+
+    if (response.status === 400) {
+      throw new Error('Invalid API key. Please go to the AI tab, click "Change Key", and paste a valid Gemini API key.');
     }
-    throw new Error(err.error?.message || 'AI analysis failed');
+    if (response.status === 403) {
+      throw new Error('API key unauthorized. Make sure the Gemini API is enabled for your key at aistudio.google.com/apikey');
+    }
+    if (response.status === 429) {
+      throw new Error('API rate limit reached. Please wait a minute and try again.');
+    }
+    throw new Error(errMsg);
   }
 
   const data = await response.json();
