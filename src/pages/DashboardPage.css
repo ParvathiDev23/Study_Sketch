@@ -23,6 +23,35 @@
   padding: 8px 20px;
 }
 
+/* ====== QUOTE OF THE DAY ====== */
+.quote-card {
+  padding: 20px 28px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  animation: fadeInUp 0.5s ease 0.1s;
+  animation-fill-mode: backwards;
+  background: linear-gradient(135deg, var(--bg-card), rgba(108, 124, 232, 0.06));
+}
+.quote-icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+  animation: float 3s ease-in-out infinite;
+}
+.quote-text {
+  font-style: italic;
+  font-size: 1.1rem;
+  flex: 1;
+  line-height: 1.4;
+}
+.quote-author {
+  font-size: 0.9rem;
+  color: var(--color-primary);
+  font-style: normal;
+  white-space: nowrap;
+}
+
 /* ====== CARDS GRID ====== */
 .dashboard-grid {
   display: grid;

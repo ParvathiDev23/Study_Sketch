@@ -166,6 +166,25 @@ export default function DashboardPage() {
     "Stay curious, stay consistent! ✨"
   ];
 
+  const quotes = [
+    { text: "The expert in anything was once a beginner.", author: "Helen Hayes" },
+    { text: "Education is the passport to the future.", author: "Malcolm X" },
+    { text: "The more you learn, the more you earn.", author: "Warren Buffett" },
+    { text: "Study hard what interests you the most in the most undisciplined way.", author: "Richard Feynman" },
+    { text: "An investment in knowledge pays the best interest.", author: "Benjamin Franklin" },
+    { text: "The beautiful thing about learning is nobody can take it away from you.", author: "B.B. King" },
+    { text: "Don't let what you cannot do interfere with what you can do.", author: "John Wooden" },
+    { text: "Success is the sum of small efforts repeated day in and day out.", author: "Robert Collier" },
+    { text: "It does not matter how slowly you go as long as you do not stop.", author: "Confucius" },
+    { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
+    { text: "Push yourself, because no one else is going to do it for you.", author: "Unknown" },
+    { text: "Great things never come from comfort zones.", author: "Unknown" },
+    { text: "Dream bigger. Do bigger.", author: "Unknown" },
+    { text: "Stay focused and never give up.", author: "Unknown" },
+  ];
+  const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+  const dailyQuote = quotes[dayOfYear % quotes.length];
+
   return (
     <div className="dashboard-page">
       {/* Welcome Banner */}
@@ -178,6 +197,13 @@ export default function DashboardPage() {
         >
           + New Exam
         </button>
+      </div>
+
+      {/* Quote of the Day */}
+      <div className="quote-card sketch-card">
+        <span className="quote-icon">💡</span>
+        <blockquote className="quote-text">"{dailyQuote.text}"</blockquote>
+        <cite className="quote-author">— {dailyQuote.author}</cite>
       </div>
 
       {/* Study Streak */}

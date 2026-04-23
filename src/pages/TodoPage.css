@@ -1,0 +1,170 @@
+/* ====== TODO PAGE ====== */
+.todo-page {
+  max-width: 700px;
+}
+.todo-page .page-title {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  margin-bottom: 24px;
+  animation: fadeInUp 0.4s ease;
+}
+
+/* ====== PROGRESS BAR ====== */
+.todo-progress {
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  animation: fadeInUp 0.3s ease;
+}
+.todo-progress-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+.todo-percent {
+  font-weight: 700;
+  color: var(--color-primary);
+}
+.todo-progress-bar {
+  height: 10px;
+  background: var(--color-border-light);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.todo-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-success));
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+/* ====== ADD TASK ====== */
+.todo-add {
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  animation: fadeInUp 0.4s ease;
+}
+.todo-add-row {
+  display: flex;
+  gap: 8px;
+}
+.todo-add-row .sketch-input {
+  flex: 1;
+}
+.todo-priority-select {
+  width: 130px;
+  padding: 10px 14px !important;
+}
+
+/* ====== FILTER TABS ====== */
+.todo-filters {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+  animation: fadeInUp 0.45s ease;
+}
+.todo-filter {
+  padding: 8px 16px;
+  border: 2px solid var(--color-border-light);
+  border-radius: 20px;
+  background: none;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: var(--color-muted);
+  transition: all 0.2s ease;
+}
+.todo-filter:hover {
+  border-color: var(--color-primary);
+  color: var(--color-text);
+}
+.todo-filter.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+  font-weight: 600;
+}
+
+/* ====== TASK LIST ====== */
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  animation: fadeInUp 0.3s ease;
+  transition: all 0.2s ease;
+}
+.todo-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.todo-priority-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.todo-text {
+  flex: 1;
+  font-size: 1.05rem;
+  transition: all 0.2s ease;
+}
+.todo-item.completed .todo-text {
+  text-decoration: line-through;
+  color: var(--color-muted);
+}
+.todo-item.completed {
+  opacity: 0.6;
+}
+.todo-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  padding: 4px 8px;
+  color: var(--color-danger);
+}
+.todo-item:hover .todo-delete {
+  opacity: 1;
+}
+
+/* ====== EMPTY STATE ====== */
+.todo-empty {
+  text-align: center;
+  padding: 40px;
+  animation: fadeInUp 0.4s ease;
+}
+.todo-empty-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 8px;
+}
+.todo-empty p {
+  color: var(--color-muted);
+  font-size: 1.1rem;
+}
+
+@media (max-width: 600px) {
+  .todo-add-row {
+    flex-direction: column;
+  }
+  .todo-priority-select {
+    width: 100%;
+  }
+  .todo-filters {
+    flex-wrap: wrap;
+  }
+  .todo-delete {
+    opacity: 1;
+  }
+}

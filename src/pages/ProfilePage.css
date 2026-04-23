@@ -1,0 +1,129 @@
+/* ====== PROFILE PAGE ====== */
+.profile-page {
+  max-width: 600px;
+}
+.profile-page .page-title {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  margin-bottom: 24px;
+  animation: fadeInUp 0.4s ease;
+}
+
+.profile-card {
+  padding: 32px;
+  animation: fadeInUp 0.5s ease;
+}
+
+.profile-section {
+  margin-bottom: 24px;
+}
+.profile-section h2 {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-underline-offset: 4px;
+}
+
+/* ====== AVATAR ====== */
+.avatar-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.avatar-option {
+  width: 48px;
+  height: 48px;
+  font-size: 1.5rem;
+  border: 2px solid var(--color-border-light);
+  border-radius: 12px;
+  background: var(--bg-card);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.avatar-option:hover {
+  transform: scale(1.1);
+  border-color: var(--color-primary);
+}
+.avatar-option.selected {
+  border-color: var(--color-primary);
+  background: rgba(108, 124, 232, 0.15);
+  box-shadow: 0 0 0 2px var(--color-primary);
+  transform: scale(1.1);
+}
+.current-avatar {
+  font-size: 4rem;
+  text-align: center;
+  padding: 16px;
+  animation: bounceIn 0.5s ease;
+}
+
+/* ====== THEME TOGGLE ====== */
+.theme-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+}
+.theme-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.toggle-track {
+  width: 52px;
+  height: 28px;
+  border-radius: 14px;
+  background: #e0d5c1;
+  position: relative;
+  transition: background 0.3s ease;
+  border: 2px solid var(--color-text);
+}
+.toggle-track.dark {
+  background: #4a4a6a;
+}
+.toggle-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s ease;
+  box-shadow: 1px 1px 0px rgba(0,0,0,0.2);
+}
+.toggle-track.dark .toggle-thumb {
+  transform: translateX(24px);
+  background: #818cf8;
+}
+
+/* ====== ACCOUNT ====== */
+.account-email {
+  color: var(--color-muted);
+  font-size: 1rem;
+}
+
+.save-btn {
+  width: 100%;
+  margin-top: 8px;
+  font-size: 1.15rem;
+  padding: 14px 28px;
+}
+
+@media (max-width: 480px) {
+  .profile-card {
+    padding: 20px;
+  }
+  .avatar-option {
+    width: 42px;
+    height: 42px;
+    font-size: 1.3rem;
+  }
+}

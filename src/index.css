@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Patrick+Hand&display=swap');
 
 :root {
-  /* Colors */
+  /* Colors — Light Theme */
   --bg-page: #FDF6E3;
   --bg-dots: #e0d5c1;
   --bg-card: #FFFFFF;
@@ -20,6 +20,7 @@
   --color-sidebar-bg: #FEFCF5;
   --color-active-bg: #6C7CE8;
   --color-active-text: #FFFFFF;
+  --color-border-light: #e0e0e0;
 
   /* Typography */
   --font-heading: 'Caveat', cursive;
@@ -28,6 +29,26 @@
   /* Spacing */
   --radius-sketch: 12px;
   --sidebar-width: 200px;
+}
+
+/* ====== DARK MODE ====== */
+[data-theme='dark'] {
+  --bg-page: #1a1a2e;
+  --bg-dots: #2a2a4a;
+  --bg-card: #16213e;
+  --border-sketch: 3px solid #4a4a6a;
+  --shadow-sketch: 4px 4px 0px #0a0a1a;
+  --shadow-sketch-hover: 6px 6px 0px #0a0a1a;
+  --color-primary: #818cf8;
+  --color-primary-light: #a5b4fc;
+  --color-accent: #fbbf24;
+  --color-accent-hover: #f59e0b;
+  --color-text: #e2e8f0;
+  --color-muted: #94a3b8;
+  --color-sidebar-bg: #0f172a;
+  --color-active-bg: #818cf8;
+  --color-active-text: #FFFFFF;
+  --color-border-light: #334155;
 }
 
 * {
@@ -49,6 +70,7 @@ body {
   background-size: 24px 24px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* ====== SCROLLBAR ====== */

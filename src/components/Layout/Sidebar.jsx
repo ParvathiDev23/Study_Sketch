@@ -1,10 +1,12 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { useTheme } from '../../contexts/ThemeContext';
 import { useState } from 'react';
 import './Sidebar.css';
 
 export default function Sidebar() {
   const { logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -15,10 +17,12 @@ export default function Sidebar() {
 
   const links = [
     { to: '/dashboard', icon: '🏠', label: 'Dashboard' },
+    { to: '/todo', icon: '📋', label: 'To-Do' },
     { to: '/reports', icon: '📊', label: 'Reports' },
     { to: '/pomodoro', icon: '⏱️', label: 'Pomodoro' },
     { to: '/flashcards', icon: '🃏', label: 'Flashcards' },
     { to: '/notes', icon: '📝', label: 'Sticky Notes' },
+    { to: '/profile', icon: '👤', label: 'Profile' },
   ];
 
   return (
@@ -59,6 +63,11 @@ export default function Sidebar() {
           ))}
         </div>
 
+        {/* Dark mode toggle */}
+        <button className="sidebar-theme-toggle" onClick={toggleTheme} title="Toggle theme">
+          {theme === 'light' ? '🌙' : '☀️'}
+        </button>
+
         <button className="sidebar-logout" onClick={handleLogout} id="logout-btn">
           <span className="icon">🚪</span>
           Logout
@@ -67,3 +76,4 @@ export default function Sidebar() {
     </>
   );
 }
+
