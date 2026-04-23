@@ -22,6 +22,7 @@ export default function Sidebar() {
     { to: '/pomodoro', icon: '⏱️', label: 'Pomodoro' },
     { to: '/flashcards', icon: '🃏', label: 'Flashcards' },
     { to: '/notes', icon: '📝', label: 'Sticky Notes' },
+    { to: '/canvas', icon: '🎨', label: 'Whiteboard' },
     { to: '/profile', icon: '👤', label: 'Profile' },
   ];
 

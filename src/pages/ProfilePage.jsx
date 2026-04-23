@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
 import { db } from '../lib/firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, query, collection, where, getDocs } from 'firebase/firestore';
 import './ProfilePage.css';
 
 const AVATARS = ['🎓', '📚', '✏️', '🧠', '🦉', '🐱', '🌟', '🎨', '🚀', '🎯', '🌸', '🦊'];
@@ -15,6 +15,13 @@ export default function ProfilePage() {
   const [studyGoal, setStudyGoal] = useState('');
   const [saved, setSaved] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  // Badge States
+  const [badges, setBadges] = useState({
+    nightOwl: false,
+    ironFocus: false,
+    fireStarter: false,
+  });
 
   useEffect(() => {
     if (!currentUser) return;
@@ -34,6 +41,37 @@ export default function ProfilePage() {
         console.error('Error loading profile:', err);
         setDisplayName(currentUser.displayName || currentUser.email?.split('@')[0] || '');
       }
+
+      // Check Badges
+      try {
+        const qStudy = query(collection(db, 'studyDays'), where('userId', '==', currentUser.uid));
+        const snapStudy = await getDocs(qStudy);
+        
+        const qPomo = query(collection(db, 'pomodoroSessions'), where('userId', '==', currentUser.uid));
+        const snapPomo = await getDocs(qPomo);
+        
+        const sessions = snapPomo.docs.map(d => d.data());
+        const days = snapStudy.docs.length;
+
+        // Condition 1: Fire Starter (>= 7 logged study days)
+        const fireStarter = days >= 7;
+
+        // Condition 2: Focus Master (Total focus minutes >= 120)
+        const totalFocus = sessions.reduce((sum, s) => sum + (s.durationMinutes || 0), 0);
+        const ironFocus = totalFocus >= 120;
+
+        // Condition 3: Night Owl (Session completed between 10 PM and 4 AM)
+        const nightOwl = sessions.some(s => {
+          if (!s.completedAt) return false;
+          const hour = new Date(s.completedAt).getHours();
+          return hour >= 22 || hour <= 4;
+        });
+
+        setBadges({ nightOwl, ironFocus, fireStarter });
+      } catch (err) {
+        console.error('Error fetching badge data:', err);
+      }
+
       setLoading(false);
     }
     loadProfile();
@@ -121,6 +159,29 @@ export default function ProfilePage() {
         <button className="sketch-btn primary save-btn" onClick={handleSave}>
           {saved ? '✅ Saved!' : '💾 Save Profile'}
         </button>
+      </div>
+
+      <div className="achievements-section sticker-card sketch-card">
+        <h2>🏆 Trophy Case</h2>
+        <p className="achievements-desc">Study hard to unlock these hand-drawn badges!</p>
+        
+        <div className="badges-grid">
+          <div className={`badge-item ${badges.nightOwl ? 'unlocked' : 'locked'}`}>
+            <span className="badge-icon">🦉</span>
+            <h4>Night Owl</h4>
+            <p>Study past 10 PM</p>
+          </div>
+          <div className={`badge-item ${badges.ironFocus ? 'unlocked' : 'locked'}`}>
+            <span className="badge-icon">🧘‍♂️</span>
+            <h4>Focus Master</h4>
+            <p>Log 120 total minutes</p>
+          </div>
+          <div className={`badge-item ${badges.fireStarter ? 'unlocked' : 'locked'}`}>
+            <span className="badge-icon">🔥</span>
+            <h4>Fire Starter</h4>
+            <p>Log 7 total study days</p>
+          </div>
+        </div>
       </div>
     </div>
   );

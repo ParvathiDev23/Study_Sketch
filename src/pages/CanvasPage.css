@@ -1,0 +1,81 @@
+.canvas-page {
+  max-width: 1000px;
+  height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+}
+
+.canvas-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  animation: fadeInUp 0.4s ease;
+}
+
+.canvas-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--bg-card);
+  padding: 12px 24px;
+  border: var(--border-sketch);
+  border-radius: var(--radius-sketch);
+  box-shadow: var(--shadow-sketch);
+  animation: fadeInUp 0.5s ease 0.1s backwards;
+}
+
+.tool-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.color-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border-light);
+  cursor: pointer;
+  transition: transform 0.2s;
+  padding: 0;
+}
+.color-btn.active {
+  border: 3px solid var(--color-text);
+  transform: scale(1.2);
+}
+
+.size-slider {
+  width: 100px;
+}
+
+.action-btn {
+  padding: 6px 12px;
+  font-size: 0.9rem;
+}
+
+.canvas-container {
+  flex: 1;
+  background: var(--bg-card);
+  border: var(--border-sketch);
+  border-radius: var(--radius-sketch);
+  box-shadow: var(--shadow-sketch);
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.5s ease 0.2s backwards;
+  cursor: crosshair;
+}
+
+.sketch-canvas {
+  width: 100%;
+  height: 100%;
+  touch-action: none; /* Prevent scrolling when drawing on touch devices */
+}
+
+@media (max-width: 768px) {
+  .canvas-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}

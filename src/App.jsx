@@ -8,6 +8,7 @@ import ReportsPage from './pages/ReportsPage';
 import PomodoroPage from './pages/PomodoroPage';
 import FlashcardsPage from './pages/FlashcardsPage';
 import StickyNotesPage from './pages/StickyNotesPage';
+import CanvasPage from './pages/CanvasPage';
 import TodoPage from './pages/TodoPage';
 import ProfilePage from './pages/ProfilePage';
 
@@ -59,6 +60,7 @@ function App() {
               <Route path="/pomodoro" element={<PomodoroPage />} />
               <Route path="/flashcards" element={<FlashcardsPage />} />
               <Route path="/notes" element={<StickyNotesPage />} />
+              <Route path="/canvas" element={<CanvasPage />} />
               <Route path="/profile" element={<ProfilePage />} />
             </Route>
             <Route path="*" element={<Navigate to="/" />} />

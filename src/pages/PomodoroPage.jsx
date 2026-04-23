@@ -11,89 +11,6 @@ const PRESETS = [
   { label: '60m', seconds: 60 * 60 },
 ];
 
-const AUDIO_OPTIONS = [
-  { label: 'None (Silent)', value: '' },
-  { label: '🎵 Lo-fi Beats', value: 'lofi' },
-  { label: '🌧️ Rain Sounds', value: 'rain' },
-  { label: '☕ Café Ambiance', value: 'cafe' },
-  { label: '🐦 Forest Birds', value: 'forest' },
-];
-
-// Generate audio using Web Audio API (synthesized ambient sounds)
-function createAmbientAudio(type, ctx) {
-  if (type === 'rain') {
-    // White noise filtered for rain
-    const bufferSize = 2 * ctx.sampleRate;
-    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) {
-      data[i] = (Math.random() * 2 - 1) * 0.3;
-    }
-    const source = ctx.createBufferSource();
-    source.buffer = buffer;
-    source.loop = true;
-    const filter = ctx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.value = 800;
-    source.connect(filter);
-    return { source, output: filter };
-  }
-  if (type === 'lofi') {
-    // Gentle oscillator with modulation
-    const osc = ctx.createOscillator();
-    osc.type = 'sine';
-    osc.frequency.value = 220;
-    const lfo = ctx.createOscillator();
-    lfo.frequency.value = 0.3;
-    const lfoGain = ctx.createGain();
-    lfoGain.gain.value = 15;
-    lfo.connect(lfoGain);
-    lfoGain.connect(osc.frequency);
-    lfo.start();
-    const filter = ctx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.value = 400;
-    osc.connect(filter);
-    return { source: osc, output: filter, extra: [lfo] };
-  }
-  if (type === 'cafe') {
-    // Brown noise for café ambiance
-    const bufferSize = 2 * ctx.sampleRate;
-    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    let last = 0;
-    for (let i = 0; i < bufferSize; i++) {
-      const white = Math.random() * 2 - 1;
-      data[i] = (last + (0.02 * white)) / 1.02;
-      last = data[i];
-      data[i] *= 3.5;
-    }
-    const source = ctx.createBufferSource();
-    source.buffer = buffer;
-    source.loop = true;
-    return { source, output: source };
-  }
-  if (type === 'forest') {
-    // Higher filtered noise for forest ambiance
-    const bufferSize = 2 * ctx.sampleRate;
-    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) {
-      data[i] = (Math.random() * 2 - 1) * 0.2;
-    }
-    const source = ctx.createBufferSource();
-    source.buffer = buffer;
-    source.loop = true;
-    const filter = ctx.createBiquadFilter();
-    filter.type = 'bandpass';
-    filter.frequency.value = 2000;
-    filter.Q.value = 0.5;
-    source.connect(filter);
-    return { source, output: filter };
-  }
-  return null;
-}
-
 export default function PomodoroPage() {
   const { currentUser } = useAuth();
   const [mode, setMode] = useState('timer'); // timer | stopwatch
@@ -105,13 +22,6 @@ export default function PomodoroPage() {
   // Stopwatch
   const [stopwatchTime, setStopwatchTime] = useState(0);
   const [laps, setLaps] = useState([]);
-
-  // Audio
-  const [audioType, setAudioType] = useState('');
-  const [volume, setVolume] = useState(0.5);
-  const audioCtxRef = useRef(null);
-  const audioNodesRef = useRef(null);
-  const gainNodeRef = useRef(null);
 
   const intervalRef = useRef(null);
 
@@ -147,51 +57,6 @@ export default function PomodoroPage() {
     }, 1000);
     return () => clearInterval(intervalRef.current);
   }, [mode, isRunning]);
-
-  // Audio management
-  useEffect(() => {
-    // Cleanup previous audio
-    if (audioNodesRef.current) {
-      try {
-        audioNodesRef.current.source.stop();
-        if (audioNodesRef.current.extra) {
-          audioNodesRef.current.extra.forEach(n => n.stop());
-        }
-      } catch (e) { /* ignore */ }
-      audioNodesRef.current = null;
-    }
-
-    if (!audioType) return;
-
-    if (!audioCtxRef.current) {
-      audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    const ctx = audioCtxRef.current;
-    const nodes = createAmbientAudio(audioType, ctx);
-    if (!nodes) return;
-
-    const gain = ctx.createGain();
-    gain.gain.value = volume;
-    gainNodeRef.current = gain;
-    nodes.output.connect(gain);
-    gain.connect(ctx.destination);
-    nodes.source.start();
-    audioNodesRef.current = nodes;
-
-    return () => {
-      try {
-        nodes.source.stop();
-        if (nodes.extra) nodes.extra.forEach(n => n.stop());
-      } catch (e) { /* ignore */ }
-    };
-  }, [audioType]);
-
-  // Volume changes
-  useEffect(() => {
-    if (gainNodeRef.current) {
-      gainNodeRef.current.gain.value = volume;
-    }
-  }, [volume]);
 
   async function saveSession(minutes) {
     if (!currentUser) return;
@@ -337,35 +202,6 @@ export default function PomodoroPage() {
             </ul>
           </div>
         )}
-
-        {/* Ambient Audio */}
-        <div className="audio-section">
-          <h3>🎧 Ambient Audio</h3>
-          <div className="audio-controls">
-            <select
-              className="sketch-select"
-              value={audioType}
-              onChange={e => setAudioType(e.target.value)}
-              id="audio-select"
-            >
-              {AUDIO_OPTIONS.map(opt => (
-                <option key={opt.value} value={opt.value}>{opt.label}</option>
-              ))}
-            </select>
-            {audioType && (
-              <input
-                type="range"
-                className="volume-slider"
-                min="0"
-                max="1"
-                step="0.05"
-                value={volume}
-                onChange={e => setVolume(parseFloat(e.target.value))}
-                title="Volume"
-              />
-            )}
-          </div>
-        </div>
       </div>
     </div>
   );

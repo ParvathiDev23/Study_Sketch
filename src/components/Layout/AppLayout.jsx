@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Sidebar from './Sidebar';
 import OnboardingTour from './OnboardingTour';
+import AmbientPlayer from '../AudioPlayer/AmbientPlayer';
 import './AppLayout.css';
 
 export default function AppLayout() {
@@ -26,6 +27,7 @@ export default function AppLayout() {
       <main className="main-content">
         <Outlet />
       </main>
+      <AmbientPlayer />
     </div>
   );
 }
