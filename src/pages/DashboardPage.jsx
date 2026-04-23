@@ -30,7 +30,29 @@ export default function DashboardPage() {
       orderBy('examDate', 'asc')
     );
     const unsub = onSnapshot(q, (snap) => {
-      setExams(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+      const fetchedExams = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      setExams(fetchedExams);
+
+      // Check for notifications
+      if ('Notification' in window && Notification.permission !== 'denied') {
+        Notification.requestPermission().then(permission => {
+          if (permission === 'granted' && !sessionStorage.getItem('studysketch_notified')) {
+            const today = new Date();
+            const upcoming = fetchedExams.filter(exam => {
+              if (!exam.examDate) return false;
+              const diffDays = Math.ceil((new Date(exam.examDate) - today) / (1000 * 60 * 60 * 24));
+              return diffDays > 0 && diffDays <= 3; // within 3 days
+            });
+            if (upcoming.length > 0) {
+              const msg = upcoming.length === 1
+                ? `Your exam "${upcoming[0].name}" is coming up soon!`
+                : `You have ${upcoming.length} exams coming up in the next 3 days!`;
+              new Notification('StudySketch Reminder 📚', { body: msg, icon: '/icon-192.png' });
+              sessionStorage.setItem('studysketch_notified', 'true');
+            }
+          }
+        });
+      }
     });
     return unsub;
   }, [currentUser]);

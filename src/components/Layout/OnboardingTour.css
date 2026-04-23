@@ -1,0 +1,88 @@
+.onboarding-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9998;
+  animation: fadeIn 0.3s ease;
+}
+
+.onboarding-highlight {
+  position: fixed;
+  border: 4px dashed var(--color-primary);
+  border-radius: var(--radius-sketch);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5); /* Another way to dim but overlay handles it better */
+  z-index: 9999;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  animation: pulseHighlight 2s infinite ease-in-out;
+}
+
+.onboarding-tooltip {
+  position: fixed;
+  width: 320px;
+  z-index: 10000;
+  padding: 24px;
+  background: var(--bg-card);
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.tour-skip {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.tour-skip:hover {
+  color: var(--color-danger);
+}
+
+.onboarding-tooltip h3 {
+  font-family: var(--font-heading);
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.onboarding-tooltip p {
+  color: var(--color-text);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.tour-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tour-progress {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+@keyframes pulseHighlight {
+  0% { box-shadow: 0 0 0 0 rgba(108, 124, 232, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(108, 124, 232, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(108, 124, 232, 0); }
+}
+
+@media (max-width: 600px) {
+  .onboarding-tooltip {
+    width: 90%;
+    max-width: 340px;
+  }
+}
